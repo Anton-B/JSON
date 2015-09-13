@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 
 namespace JSON
 {
@@ -11,7 +6,8 @@ namespace JSON
     {
         static void Main(string[] args)
         {
-            var doc = JDocument.Load("f_test.json");
+            var doc = JDocument.Load("f.json");
+            Console.WriteLine(doc.Root["obj"]["inf"]["arr"][1]["o"]);
             Console.ReadLine();
         }
     }

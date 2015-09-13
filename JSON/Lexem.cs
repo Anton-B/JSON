@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace JSON
+﻿namespace JSON
 {
     sealed class Lexem
     {
@@ -12,7 +6,6 @@ namespace JSON
         public string Text { get; set; }
 
         public Lexem(){}
-
         public Lexem(JToken token, string text)
         {
             Token = token;

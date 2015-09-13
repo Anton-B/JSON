@@ -1,21 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JSON
 {
-    class JValue : JAbstractObject
+    class JValue<T> : JAbstractObject
     {
-        public string Name { get; set; } = null;
-        public JAbstractObject Type { get; set; } = null;
+        public T Value { get; set; }
 
-        public virtual void Add(JValue obj)
+        public override JAbstractObject this[object index]
         {
-            obj.Parent = this;
-            Array.Resize<JValue>(ref this.values, this.values.Length + 1);
-            this.values[this.values.Length - 1] = obj;
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public override string ToString()
+        {
+            return "value: " + Value;
         }
     }
 }

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace JSON
+﻿namespace JSON
 {
     class Parser
     {
         public string Text { get; set; }
-        private JValue CurrentObject = null;
+        private string tempName;
+        private JAbstractObject CurrentObject;
 
         public Parser() { }
         public Parser(string Text)
@@ -17,7 +12,7 @@ namespace JSON
             this.Text = Text;
         }
         
-        public JValue Parse()
+        public JAbstractObject Parse()
         {
             Lexer lexer = new Lexer(this.Text);
             Lexem currLexem = lexer.Next();
@@ -30,42 +25,76 @@ namespace JSON
                         newObj = new JObject();
                     else
                         newObj = new JArray();
-                    if (CurrentObject == null || CurrentObject.Type is JArray)
-                    {
-                        JValue newVal = new JValue();
-                        newVal.Parent = CurrentObject;
-                        CurrentObject = newVal;
-                    }
-                    CurrentObject.Type = newObj;
+                    newObj.Name = tempName;
+                    tempName = null;
+                    newObj.Parent = CurrentObject;
+                    CurrentObject = newObj;
                 }
-                else if (currLexem.Token == JToken.String)
+                else if (currLexem.Token == JToken.String || currLexem.Token == JToken.Int || currLexem.Token == JToken.Double)
                 {
-                    JValue newObj = new JValue();
-                    CurrentObject.Add(newObj);
-                    if (CurrentObject.Type is JObject)
+                    if ((tempName != null && CurrentObject is JObject) || (CurrentObject is JArray))
                     {
-                        CurrentObject = newObj;
-                        CurrentObject.Name = currLexem.Text;
-                        CurrentObject.Type = new JValue();
+                        if (currLexem.Token == JToken.String)
+                            AddValue<string>(currLexem.Text);
+                        else if (currLexem.Token == JToken.Int)
+                        {
+                            int intNum;
+                            int.TryParse(currLexem.Text, out intNum);
+                            AddValue<int>(intNum);
+                        }
+                        else
+                        {
+                            double doubleNum;
+                            ToDouble(currLexem.Text, out doubleNum);
+                            AddValue<double>(doubleNum);
+                        }
                     }
-                    else if (CurrentObject.Type is JValue)
-                    {
-                        CurrentObject.Type = new JValue();
-                        CurrentObject.values.Last().Value = currLexem.Text;
-                        CurrentObject = CurrentObject.Parent;
-                    }
-                    else if (CurrentObject.Type is JArray)
-                        CurrentObject.values.Last().Value = currLexem.Text;
+                    else
+                        tempName = currLexem.Text;
                 }
                 else if (CurrentObject.Parent != null && (currLexem.Token == JToken.CloseArrayBrace || currLexem.Token == JToken.CloseObjectBrace))
                 {
-                    if (CurrentObject.Parent.values.Last() != CurrentObject)
-                        CurrentObject.Parent.Add(CurrentObject);
+                    if (CurrentObject.Parent is JObject)
+                        ((JObject)CurrentObject.Parent).objectDict.Add(CurrentObject.Name, CurrentObject);
+                    else
+                        ((JArray)CurrentObject.Parent).arrayList.Add(CurrentObject);
                     CurrentObject = CurrentObject.Parent;
                 }
                 currLexem = lexer.Next();
             }
             return CurrentObject;
+        }
+
+        private void ToDouble(string s, out double d)
+        {
+            int dot = s.IndexOf('.');
+            int num;
+            int.TryParse(s.Substring(0, dot), out num);
+            d = 0;
+            d += num;
+            string fractionString = s.Substring(dot + 1);
+            fractionString = "0," + fractionString;
+            double fraction;
+            double.TryParse(fractionString, out fraction);
+            d += fraction;        
+        }
+
+        private void AddValue<T>(T lexem)
+        {
+            JAbstractObject newObj = new JValue<T>();
+            ((JValue<T>)newObj).Value = lexem;
+            newObj.Parent = CurrentObject;
+            if (tempName != null && CurrentObject is JObject)
+            {
+                newObj.Name = tempName;
+                ((JObject)CurrentObject).objectDict.Add(tempName, (JValue<T>)newObj);
+                tempName = null;
+            }
+            else if (CurrentObject is JArray)
+            {
+                ((JArray)CurrentObject).arrayList.Add((JValue<T>)newObj);
+                tempName = null;
+            }
         }
     }
 }

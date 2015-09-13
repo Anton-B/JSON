@@ -1,21 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace JSON
+﻿namespace JSON
 {
     class Lexer
     {
         private string text;
         private int position = -1;
-        private int quoteFl = 0;
+        private bool quoteFl = false;
 
         public Lexer(){}
-
         public Lexer(string text)
         {
             this.text = text;
@@ -34,15 +25,21 @@ namespace JSON
                 if (stringStart != -1)
                 {
                     stringLength++;
-                    if (text[position] == '"' || (quoteFl == 0 && (position + 1 < text.Length && text[position + 1] == ',' 
+                    if (text[position] == '"' || (quoteFl == false && position + 1 < text.Length && (text[position + 1] == ',' 
                         || text[position + 1] == '}' || char.IsWhiteSpace(text[position + 1]))))
                     {
                         if (text[position] == '"')
                         {
                             stringLength--;
-                            quoteFl = 0;
-                        }   
-                        return new Lexem(JToken.String, text.Substring(stringStart, stringLength));
+                            quoteFl = false;
+                            return new Lexem(JToken.String, text.Substring(stringStart, stringLength));
+                        }
+                        string resString = text.Substring(stringStart, stringLength);
+                        int n;                     
+                        if (int.TryParse(resString, out n))
+                            return new Lexem(JToken.Int, resString);
+                        else if (TryParseDouble(resString))
+                            return new Lexem(JToken.Double, resString);
                     }
                     position++;
                     continue;
@@ -65,7 +62,7 @@ namespace JSON
                             return new Lexem(JToken.Colon, text[position].ToString());
                         case '"':
                             stringStart = ++position;
-                            quoteFl = 1;
+                            quoteFl = true;
                             break;
                         default:
                             if (char.IsDigit(text[position]) || text[position] == '.')
@@ -78,6 +75,14 @@ namespace JSON
                 }
             }
             return null;
+        }
+
+        private bool TryParseDouble(string resString)
+        {
+            foreach (char c in resString)
+                if (!char.IsDigit(c) && c != '.')
+                    return false;
+            return true;
         }
     }
 }
