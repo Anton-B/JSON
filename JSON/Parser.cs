@@ -31,6 +31,7 @@ namespace JSON
                     tempName = null;
                     if (CurrentObject != null)
                         ((JValuesContainer)CurrentObject).AddValue(newObj);
+                    newObj.Parent = CurrentObject;
                     CurrentObject = newObj;
                 }
                 else if (currLexem.Token == JToken.String || currLexem.Token == JToken.Int || currLexem.Token == JToken.Double)
