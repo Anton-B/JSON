@@ -2,21 +2,22 @@
   "obj": {
     "data": "[t,e]:x{t}",
     "id": 13.7854,
-    "inf": 
-    {
-      "arr": 
-      [
+    "inf": {
+      "arr": [
+        false,
         1489,
         {
-          "o": "one",
+          "o": true,
           "t": "two"
         },
         34.2,
-        "end"
+        "end",
+        null
       ]
     }
   },
   "obj2": {
-    "obj3": "1"
+    "obj3": null,
+    "obj4": "1"
   }
 }

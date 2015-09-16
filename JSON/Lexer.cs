@@ -35,11 +35,17 @@
                             return new Lexem(JToken.String, text.Substring(stringStart, stringLength));
                         }
                         string resString = text.Substring(stringStart, stringLength);
-                        int n;                     
+                        int n;
                         if (int.TryParse(resString, out n))
                             return new Lexem(JToken.Int, resString);
                         else if (TryParseDouble(resString))
                             return new Lexem(JToken.Double, resString);
+                        else if (resString == "true")
+                            return new Lexem(JToken.True, resString);
+                        else if (resString == "false")
+                            return new Lexem(JToken.False, resString);
+                        else if (resString == "null")
+                            return new Lexem(JToken.Null, resString);
                     }
                     position++;
                     continue;
@@ -65,7 +71,8 @@
                             quoteFl = true;
                             break;
                         default:
-                            if (char.IsDigit(text[position]) || text[position] == '.')
+                            if (char.IsDigit(text[position]) || text[position] == '.' || text[position] == 't' 
+                                || text[position] == 'f' || text[position] == 'n')
                             {
                                 stringStart = position;
                                 break;

@@ -34,7 +34,8 @@ namespace JSON
                     newObj.Parent = CurrentObject;
                     CurrentObject = newObj;
                 }
-                else if (currLexem.Token == JToken.String || currLexem.Token == JToken.Int || currLexem.Token == JToken.Double)
+                else if (currLexem.Token == JToken.String || currLexem.Token == JToken.Int || currLexem.Token == JToken.Double 
+                    || currLexem.Token == JToken.True || currLexem.Token == JToken.False || currLexem.Token == JToken.Null)
                 {
                     if ((tempName != null && CurrentObject is JObject) || (CurrentObject is JArray))
                     {
@@ -46,12 +47,18 @@ namespace JSON
                             int.TryParse(currLexem.Text, out intNum);
                             ((JValuesContainer)CurrentObject).AddValue<int>(intNum, tempName);
                         }
-                        else
+                        else if (currLexem.Token == JToken.Double)
                         {
                             double doubleNum;
                             double.TryParse(currLexem.Text.Replace('.', ','), out doubleNum);
                             ((JValuesContainer)CurrentObject).AddValue<double>(doubleNum, tempName);
                         }
+                        else if (currLexem.Token == JToken.True)
+                            ((JValuesContainer)CurrentObject).AddValue<bool>(true, tempName);
+                        else if (currLexem.Token == JToken.False)
+                            ((JValuesContainer)CurrentObject).AddValue<bool>(false, tempName);
+                        else
+                            ((JValuesContainer)CurrentObject).AddValue<object>(null, tempName);
                         tempName = null;
                     }
                     else

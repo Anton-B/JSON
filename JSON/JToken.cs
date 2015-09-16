@@ -11,6 +11,9 @@
         Quote = 7,
         String = 8,
         Int = 9,
-        Double = 10
+        Double = 10,
+        True = 11,
+        False = 12,
+        Null = 13        
     }
 }
