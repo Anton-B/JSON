@@ -4,7 +4,7 @@ namespace JSON
 {
     class JArray : JValuesContainer
     {
-        public List<JAbstractObject> arrayList = new List<JAbstractObject>();
+        private List<JAbstractObject> arrayList = new List<JAbstractObject>();
 
         public override JAbstractObject this[object index]
         {

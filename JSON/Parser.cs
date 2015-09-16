@@ -47,7 +47,7 @@ namespace JSON
                         else
                         {
                             double doubleNum;
-                            ToDouble(currLexem.Text, out doubleNum);
+                            double.TryParse(currLexem.Text.Replace('.', ','), out doubleNum);
                             ((JValuesContainer)CurrentObject).AddValue<double>(doubleNum, tempName);
                         }
                         tempName = null;
@@ -59,28 +59,14 @@ namespace JSON
                     || currLexem.Token == JToken.CloseObjectBrace))
                 {
                     if (CurrentObject.Parent is JObject)
-                        ((JObject)CurrentObject.Parent).objectDict.Add(CurrentObject.Name, CurrentObject);
+                        ((JObject)CurrentObject.Parent).AddValue(CurrentObject);
                     else
-                        ((JArray)CurrentObject.Parent).arrayList.Add(CurrentObject);
+                        ((JArray)CurrentObject.Parent).AddValue(CurrentObject);
                     CurrentObject = CurrentObject.Parent;
                 }
                 currLexem = lexer.Next();
             }
             return CurrentObject;
-        }
-
-        private void ToDouble(string s, out double d)
-        {
-            int dot = s.IndexOf('.');
-            int num;
-            int.TryParse(s.Substring(0, dot), out num);
-            d = 0;
-            d += num;
-            string fractionString = s.Substring(dot + 1);
-            fractionString = "0," + fractionString;
-            double fraction;
-            double.TryParse(fractionString, out fraction);
-            d += fraction;        
         }
     }
 }

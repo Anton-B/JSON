@@ -5,7 +5,7 @@ namespace JSON
 {
     class JObject : JValuesContainer
     {
-        public Dictionary<string, JAbstractObject> objectDict = new Dictionary<string, JAbstractObject>();
+        private Dictionary<string, JAbstractObject> objectDict = new Dictionary<string, JAbstractObject>();
 
         public override JAbstractObject this[object key]
         {
