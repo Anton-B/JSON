@@ -1,4 +1,7 @@
-﻿namespace JSON
+﻿using System;
+using System.Collections.Generic;
+
+namespace JSON
 {
     class Parser
     {
@@ -6,7 +9,6 @@
         private string tempName;
         private JAbstractObject CurrentObject;
 
-        public Parser() { }
         public Parser(string Text)
         {
             this.Text = Text;
@@ -35,24 +37,26 @@
                     if ((tempName != null && CurrentObject is JObject) || (CurrentObject is JArray))
                     {
                         if (currLexem.Token == JToken.String)
-                            AddValue<string>(currLexem.Text);
+                            ((JValuesContainer)CurrentObject).AddValue<string>(currLexem.Text, tempName);
                         else if (currLexem.Token == JToken.Int)
                         {
                             int intNum;
                             int.TryParse(currLexem.Text, out intNum);
-                            AddValue<int>(intNum);
+                            ((JValuesContainer)CurrentObject).AddValue<int>(intNum, tempName);
                         }
                         else
                         {
                             double doubleNum;
                             ToDouble(currLexem.Text, out doubleNum);
-                            AddValue<double>(doubleNum);
+                            ((JValuesContainer)CurrentObject).AddValue<double>(doubleNum, tempName);
                         }
+                        tempName = null;
                     }
                     else
                         tempName = currLexem.Text;
                 }
-                else if (CurrentObject.Parent != null && (currLexem.Token == JToken.CloseArrayBrace || currLexem.Token == JToken.CloseObjectBrace))
+                else if (CurrentObject.Parent != null && (currLexem.Token == JToken.CloseArrayBrace 
+                    || currLexem.Token == JToken.CloseObjectBrace))
                 {
                     if (CurrentObject.Parent is JObject)
                         ((JObject)CurrentObject.Parent).objectDict.Add(CurrentObject.Name, CurrentObject);
@@ -77,24 +81,6 @@
             double fraction;
             double.TryParse(fractionString, out fraction);
             d += fraction;        
-        }
-
-        private void AddValue<T>(T lexem)
-        {
-            JAbstractObject newObj = new JValue<T>();
-            ((JValue<T>)newObj).Value = lexem;
-            newObj.Parent = CurrentObject;
-            if (tempName != null && CurrentObject is JObject)
-            {
-                newObj.Name = tempName;
-                ((JObject)CurrentObject).objectDict.Add(tempName, (JValue<T>)newObj);
-                tempName = null;
-            }
-            else if (CurrentObject is JArray)
-            {
-                ((JArray)CurrentObject).arrayList.Add((JValue<T>)newObj);
-                tempName = null;
-            }
         }
     }
 }

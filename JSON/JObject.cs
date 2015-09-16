@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace JSON
 {
-    class JObject : JAbstractObject
+    class JObject : JValuesContainer
     {
         public Dictionary<string, JAbstractObject> objectDict = new Dictionary<string, JAbstractObject>();
 
@@ -26,6 +26,12 @@ namespace JSON
                 objectDict.TryGetValue(str, out val);
                 return val;
             }
+        }
+
+        public override void AddValue(JAbstractObject value)
+        {
+            objectDict.Add(value.Name, value);
+            base.AddValue(value);
         }
     }
 }

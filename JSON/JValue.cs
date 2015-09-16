@@ -6,6 +6,12 @@ namespace JSON
     {
         public T Value { get; set; }
 
+        public JValue(T value, string name)
+        {
+            Value = value;
+            Name = name;
+        }
+
         public override JAbstractObject this[object index]
         {
             get

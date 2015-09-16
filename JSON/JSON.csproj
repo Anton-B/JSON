@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JValuesContainer.cs" />
     <Compile Include="JAbstractObject.cs" />
     <Compile Include="JArray.cs" />
     <Compile Include="JDocument.cs" />

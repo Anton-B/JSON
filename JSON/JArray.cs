@@ -2,7 +2,7 @@
 
 namespace JSON
 {
-    class JArray : JAbstractObject
+    class JArray : JValuesContainer
     {
         public List<JAbstractObject> arrayList = new List<JAbstractObject>();
 
@@ -12,6 +12,12 @@ namespace JSON
             {
                 return arrayList[(int)index];
             }
+        }
+
+        public override void AddValue(JAbstractObject value)
+        {
+            arrayList.Add(value);
+            base.AddValue(value);
         }
     }
 }
