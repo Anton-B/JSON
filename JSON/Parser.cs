@@ -29,7 +29,8 @@ namespace JSON
                         newObj = new JArray();
                     newObj.Name = tempName;
                     tempName = null;
-                    newObj.Parent = CurrentObject;
+                    if (CurrentObject != null)
+                        ((JValuesContainer)CurrentObject).AddValue(newObj);
                     CurrentObject = newObj;
                 }
                 else if (currLexem.Token == JToken.String || currLexem.Token == JToken.Int || currLexem.Token == JToken.Double)
@@ -55,15 +56,8 @@ namespace JSON
                     else
                         tempName = currLexem.Text;
                 }
-                else if (CurrentObject.Parent != null && (currLexem.Token == JToken.CloseArrayBrace 
-                    || currLexem.Token == JToken.CloseObjectBrace))
-                {
-                    if (CurrentObject.Parent is JObject)
-                        ((JObject)CurrentObject.Parent).AddValue(CurrentObject);
-                    else
-                        ((JArray)CurrentObject.Parent).AddValue(CurrentObject);
+                else if (CurrentObject.Parent != null && (currLexem.Token == JToken.CloseArrayBrace || currLexem.Token == JToken.CloseObjectBrace))
                     CurrentObject = CurrentObject.Parent;
-                }
                 currLexem = lexer.Next();
             }
             return CurrentObject;
