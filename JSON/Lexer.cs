@@ -26,7 +26,7 @@
                 {
                     stringLength++;
                     if (text[position] == '"' || (quoteFl == false && position + 1 < text.Length && (text[position + 1] == ',' 
-                        || text[position + 1] == '}' || char.IsWhiteSpace(text[position + 1]))))
+                        || text[position + 1] == '}' || text[position + 1] == ']' || char.IsWhiteSpace(text[position + 1]))))
                     {
                         if (text[position] == '"')
                         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace JSON
@@ -32,6 +33,11 @@ namespace JSON
         {
             objectDict.Add(value.Name, value);
             base.AddValue(value);
+        }
+
+        public override IEnumerator<JAbstractObject> GetEnumerator()
+        {
+            return objectDict.Values.GetEnumerator();
         }
     }
 }
