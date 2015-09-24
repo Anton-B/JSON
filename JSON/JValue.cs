@@ -2,7 +2,7 @@
 
 namespace JSON
 {
-    class JValue<T> : JAbstractObject
+    public class JValue<T> : JAbstractObject
     {
         public T Value { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace JSON
 {
-    enum JToken
+    public enum JToken
     {
         OpenObjectBrace = 1,
         CloseObjectBrace = 2,
@@ -14,6 +14,7 @@
         Double = 10,
         True = 11,
         False = 12,
-        Null = 13        
+        Null = 13,
+        Char = 14   
     }
 }

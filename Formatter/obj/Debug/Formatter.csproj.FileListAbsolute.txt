@@ -1,0 +1,16 @@
+D:\C#\JSON\Formatter\bin\Debug\Formatter.exe.config
+D:\C#\JSON\Formatter\bin\Debug\Formatter.exe
+D:\C#\JSON\Formatter\bin\Debug\Formatter.pdb
+D:\C#\JSON\Formatter\bin\Debug\JSON.dll
+D:\C#\JSON\Formatter\bin\Debug\JSON.pdb
+D:\C#\JSON\Formatter\obj\Debug\Formatter.csprojResolveAssemblyReference.cache
+D:\C#\JSON\Formatter\obj\Debug\MainWindow.g.cs
+D:\C#\JSON\Formatter\obj\Debug\App.g.cs
+D:\C#\JSON\Formatter\obj\Debug\Formatter_MarkupCompile.cache
+D:\C#\JSON\Formatter\obj\Debug\Formatter_MarkupCompile.lref
+D:\C#\JSON\Formatter\obj\Debug\MainWindow.baml
+D:\C#\JSON\Formatter\obj\Debug\Formatter.g.resources
+D:\C#\JSON\Formatter\obj\Debug\Formatter.Properties.Resources.resources
+D:\C#\JSON\Formatter\obj\Debug\Formatter.csproj.GenerateResource.Cache
+D:\C#\JSON\Formatter\obj\Debug\Formatter.exe
+D:\C#\JSON\Formatter\obj\Debug\Formatter.pdb

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace JSON
 {
-    class Parser
+    public class Parser
     {
         public string Text { get; set; }
         private string tempName;

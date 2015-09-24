@@ -1,6 +1,6 @@
 ﻿namespace JSON
 {
-    class Lexer
+    public class Lexer
     {
         private string text;
         private int position = -1;
@@ -71,13 +71,8 @@
                             quoteFl = true;
                             break;
                         default:
-                            if (char.IsDigit(text[position]) || text[position] == '.' || text[position] == 't' 
-                                || text[position] == 'f' || text[position] == 'n')
-                            {
-                                stringStart = position;
-                                break;
-                            }
-                            return new Lexem(JToken.String, text[position].ToString());
+                             stringStart = position;
+                             break;
                     }
                 }
             }

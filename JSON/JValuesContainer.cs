@@ -8,7 +8,7 @@ using System.IO;
 
 namespace JSON
 {
-    abstract class JValuesContainer: JAbstractObject, IEnumerable<JAbstractObject>
+    public abstract class JValuesContainer: JAbstractObject, IEnumerable<JAbstractObject>
     {
         public void AddValue<T>(T value, string name = null)
         {

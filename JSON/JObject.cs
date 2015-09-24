@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace JSON
 {
-    class JObject : JValuesContainer
+    public class JObject : JValuesContainer
     {
         private Dictionary<string, JAbstractObject> objectDict = new Dictionary<string, JAbstractObject>();
 

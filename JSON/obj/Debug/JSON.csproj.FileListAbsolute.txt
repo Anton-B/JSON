@@ -1,6 +1,6 @@
 D:\C#\JSON\JSON\bin\Debug\JSON.pdb
 D:\C#\JSON\JSON\obj\Debug\JSON.csprojResolveAssemblyReference.cache
 D:\C#\JSON\JSON\obj\Debug\JSON.pdb
-D:\C#\JSON\JSON\bin\Debug\JSON.exe.config
-D:\C#\JSON\JSON\bin\Debug\JSON.exe
-D:\C#\JSON\JSON\obj\Debug\JSON.exe
+D:\C#\JSON\JSON\bin\Debug\JSON.dll.config
+D:\C#\JSON\JSON\bin\Debug\JSON.dll
+D:\C#\JSON\JSON\obj\Debug\JSON.dll

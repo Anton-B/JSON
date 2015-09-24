@@ -1,6 +1,6 @@
 ﻿namespace JSON
 {
-    sealed class Lexem
+    public sealed class Lexem
     {
         public JToken Token { get; set; }
         public string Text { get; set; }

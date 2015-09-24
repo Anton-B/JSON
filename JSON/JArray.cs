@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace JSON
 {
-    class JArray : JValuesContainer
+    public class JArray : JValuesContainer
     {
         private List<JAbstractObject> arrayList = new List<JAbstractObject>();
 
