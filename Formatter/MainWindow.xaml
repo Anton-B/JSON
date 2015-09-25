@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Formatter"
         mc:Ignorable="d"
-        Title="JSON Formatter" Height="600" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="D:\C#\JSON\Formatter\Resources\JSON_icon.png">
+        Title="JSON Formatter" Height="600" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid FocusManager.FocusedElement="{Binding ElementName=textBox}" Margin="0,0,-6,-1">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -14,7 +14,7 @@
         </Grid.ColumnDefinitions>
         <Button x:Name="bt_format" Content="Format" HorizontalAlignment="Left" Margin="220,10,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="bt_format_Click"/>
         <Button x:Name="bt_remove_space" Content="Remove white space" HorizontalAlignment="Left" Margin="325,10,0,0" VerticalAlignment="Top" Width="125" Height="30" Click="bt_remove_space_Click"/>
-        <TextBox x:Name="textBox" AcceptsReturn="True" HorizontalAlignment="Left" Height="506" Margin="10,45,0,0" TextWrapping="Wrap" TabIndex="0" VerticalAlignment="Top" Width="763" FontFamily="Lucida Console" />
+        <TextBox x:Name="textBox" AcceptsReturn="True" AcceptsTab="True" HorizontalAlignment="Left" Height="506" Margin="10,45,0,0" TextWrapping="Wrap" TabIndex="0" VerticalAlignment="Top" Width="763" FontFamily="Lucida Console" IsHitTestVisible="True" />
         <Button x:Name="bt_clear" Content="Clear" HorizontalAlignment="Left" Margin="455,10,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="bt_clear_Click"/>
         <Button x:Name="bt_paste" Content="Paste" HorizontalAlignment="Left" Height="30" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Click="bt_paste_Click"/>
         <Button x:Name="bt_copy" Content="Copy" HorizontalAlignment="Left" Height="30" Margin="115,10,0,0" VerticalAlignment="Top" Width="100" Click="bt_copy_Click"/>

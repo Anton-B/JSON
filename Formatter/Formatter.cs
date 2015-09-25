@@ -12,23 +12,11 @@ namespace Formatter
 {
     public class Formatter
     {
-        public void Paste(TextBox tb)
-        {
-            tb.Focus();
-            tb.Paste();
-        }
-
-        public void Copy(TextBox tb)
-        {
-            tb.Focus();
-            tb.Copy();
-        }
-
-        public void Format(TextBox tb)
+        public string Format(string input)
         {
             StringBuilder newText = new StringBuilder();
             int numOfSpaces = 0;
-            Lexer lexer = new Lexer(tb.Text);
+            Lexer lexer = new Lexer(input);
             Lexem lexem = lexer.Next();
             while (lexem != null)
             {
@@ -63,24 +51,16 @@ namespace Formatter
                 lexem = lexer.Next();
             }
             if (newText != null)
-                tb.Text = newText.ToString();
+                return newText.ToString();
+            return input;
         }
 
-        public void RemoveEmptyEntries(TextBox tb)
+        public string RemoveEmptyEntries(string input)
         {
-            tb.Focus();
-            string input = tb.Text;
             string pattern = "\\s";
             string replacement = "";
             Regex regex = new Regex(pattern);
-            string result = regex.Replace(input, replacement);
-            tb.Text = result;
-        }
-
-        public void Clear(TextBox tb)
-        {
-            tb.Focus();
-            tb.Text = "";
+            return regex.Replace(input, replacement);
         }
     }
 }

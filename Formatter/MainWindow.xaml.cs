@@ -28,29 +28,34 @@ namespace Formatter
             InitializeComponent();
         }
 
-        private void bt_clear_Click(object sender, RoutedEventArgs e)
-        {
-            formatter.Clear(textBox);
-        }
-
-        private void bt_remove_space_Click(object sender, RoutedEventArgs e)
-        {
-            formatter.RemoveEmptyEntries(textBox);
-        }
-
-        private void bt_format_Click(object sender, RoutedEventArgs e)
-        {
-            formatter.Format(textBox);            
-        }
-
         private void bt_paste_Click(object sender, RoutedEventArgs e)
         {
-            formatter.Paste(textBox);
+            textBox.Focus();
+            textBox.Paste();
         }
 
         private void bt_copy_Click(object sender, RoutedEventArgs e)
         {
-            formatter.Copy(textBox);
+            textBox.Focus();
+            textBox.Copy();
+        }
+
+        private void bt_format_Click(object sender, RoutedEventArgs e)
+        {
+            textBox.Focus();
+            textBox.Text = formatter.Format(textBox.Text);            
+        }
+
+        private void bt_remove_space_Click(object sender, RoutedEventArgs e)
+        {
+            textBox.Focus();
+            textBox.Text = formatter.RemoveEmptyEntries(textBox.Text);
+        }
+
+        private void bt_clear_Click(object sender, RoutedEventArgs e)
+        {
+            textBox.Focus();
+            textBox.Clear();
         }
     }
 }

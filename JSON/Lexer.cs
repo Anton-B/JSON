@@ -17,7 +17,7 @@
             position++;
             if (position >= text.Length)
                 return null;
-            while (char.IsWhiteSpace(text[position]))
+            while (position < text.Length && char.IsWhiteSpace(text[position]))
                 position++;
             int stringStart = -1, stringLength = 0;
             while (position < text.Length)
