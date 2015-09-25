@@ -21,6 +21,8 @@ namespace Formatter
     /// </summary>
     public partial class MainWindow : Window
     {
+        Formatter formatter = new Formatter();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -28,75 +30,27 @@ namespace Formatter
 
         private void bt_clear_Click(object sender, RoutedEventArgs e)
         {
-            textBox.Focus();
-            textBox.Text = "";
+            formatter.Clear(textBox);
         }
 
         private void bt_remove_space_Click(object sender, RoutedEventArgs e)
         {
-            textBox.Focus();
-            string t = textBox.Text;
-            t = t.Replace("\n", "");
-            t = t.Replace("\t", "");
-            t = t.Replace("\r", "");
-            t = t.Replace("\v", "");
-            t = t.Replace(" ", "");
-            textBox.Text = t;
+            formatter.RemoveEmptyEntries(textBox);
         }
 
         private void bt_format_Click(object sender, RoutedEventArgs e)
         {
-            bt_remove_space_Click(sender, e);
-            string newText = "";
-            int numOfSpaces = 0;
-            Lexer lexer = new Lexer(textBox.Text);
-            Lexem lexem = lexer.Next();
-            while (lexem != null)
-            {
-                if (lexem.Token == JToken.OpenArrayBrace || lexem.Token == JToken.OpenObjectBrace)
-                {
-                    numOfSpaces += 2;
-                    lexem.Text = lexem.Text + "\n";
-                    for (int i = 0; i < numOfSpaces; i++)
-                        lexem.Text += " ";
-                }
-                else if (lexem.Token == JToken.Colon)
-                    lexem.Text += " ";
-                else if (lexem.Token == JToken.Comma)
-                {
-                    lexem.Text = lexem.Text + "\n";
-                    for (int i = 0; i < numOfSpaces; i++)
-                        lexem.Text += " ";
-                }
-                else if (lexem.Token == JToken.CloseArrayBrace || lexem.Token == JToken.CloseObjectBrace)
-                {
-                    numOfSpaces -= 2;
-                    for (int i = 0; i < numOfSpaces; i++)
-                        lexem.Text = " " + lexem.Text;
-                    lexem.Text = "\n" + lexem.Text;
-                }
-                else if (lexem.Token == JToken.String)
-                {
-                    lexem.Text = "\"" + lexem.Text;
-                    lexem.Text += "\"";
-                }
-                newText += lexem.Text;
-                lexem = lexer.Next();
-            }
-            if (newText != "")
-                textBox.Text = newText;
+            formatter.Format(textBox);            
         }
 
         private void bt_paste_Click(object sender, RoutedEventArgs e)
         {
-            textBox.Focus();
-            textBox.Paste();
+            formatter.Paste(textBox);
         }
 
         private void bt_copy_Click(object sender, RoutedEventArgs e)
         {
-            textBox.Focus();
-            textBox.Copy();
+            formatter.Copy(textBox);
         }
     }
 }
