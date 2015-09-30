@@ -21,8 +21,6 @@ namespace Formatter
     /// </summary>
     public partial class MainWindow : Window
     {
-        Formatter formatter = new Formatter();
-
         public MainWindow()
         {
             InitializeComponent();
@@ -30,32 +28,36 @@ namespace Formatter
 
         private void bt_paste_Click(object sender, RoutedEventArgs e)
         {
-            textBox.Focus();
-            textBox.Paste();
+            richTextBox.Focus();
+            richTextBox.Paste();
         }
 
         private void bt_copy_Click(object sender, RoutedEventArgs e)
         {
-            textBox.Focus();
-            textBox.Copy();
+            richTextBox.Focus();
+            richTextBox.Copy();
         }
 
         private void bt_format_Click(object sender, RoutedEventArgs e)
         {
-            textBox.Focus();
-            textBox.Text = formatter.Format(textBox.Text);            
+            richTextBox.Focus();
+            string oldStr = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
+            richTextBox.Document.Blocks.Clear();
+            richTextBox.Document = Formatter.Format(oldStr);
         }
 
         private void bt_remove_space_Click(object sender, RoutedEventArgs e)
         {
-            textBox.Focus();
-            textBox.Text = formatter.RemoveEmptyEntries(textBox.Text);
+            richTextBox.Focus();
+            string oldStr = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
+            richTextBox.Document.Blocks.Clear();
+            richTextBox.AppendText(Formatter.RemoveEmptyEntries(oldStr));
         }
 
         private void bt_clear_Click(object sender, RoutedEventArgs e)
         {
-            textBox.Focus();
-            textBox.Clear();
+            richTextBox.Focus();
+            richTextBox.Document.Blocks.Clear();
         }
     }
 }
