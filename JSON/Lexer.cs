@@ -15,6 +15,7 @@
         public Lexem Next()
         {
             position++;
+            
             if (position >= text.Length)
                 return null;
             while (position < text.Length && char.IsWhiteSpace(text[position]))
@@ -32,20 +33,20 @@
                         {
                             stringLength--;
                             quoteFl = false;
-                            return new Lexem(JToken.String, text.Substring(stringStart, stringLength));
+                            return new Lexem(JToken.String, text.Substring(stringStart, stringLength), position - stringLength - 1);
                         }
                         string resString = text.Substring(stringStart, stringLength);
                         int n;
                         if (int.TryParse(resString, out n))
-                            return new Lexem(JToken.Int, resString);
+                            return new Lexem(JToken.Int, resString, position + 1 - resString.Length);
                         else if (TryParseDouble(resString))
-                            return new Lexem(JToken.Double, resString);
+                            return new Lexem(JToken.Double, resString, position + 1 - resString.Length);
                         else if (resString == "true")
-                            return new Lexem(JToken.True, resString);
+                            return new Lexem(JToken.True, resString, position + 1 - resString.Length);
                         else if (resString == "false")
-                            return new Lexem(JToken.False, resString);
+                            return new Lexem(JToken.False, resString, position + 1 - resString.Length);
                         else if (resString == "null")
-                            return new Lexem(JToken.Null, resString);
+                            return new Lexem(JToken.Null, resString, position + 1 - resString.Length);
                     }
                     position++;
                     continue;
@@ -55,24 +56,24 @@
                     switch (text[position])
                     {
                         case '{':
-                            return new Lexem(JToken.OpenObjectBrace, text[position].ToString());
+                            return new Lexem(JToken.OpenObjectBrace, text[position].ToString(), position);
                         case '}':
-                            return new Lexem(JToken.CloseObjectBrace, text[position].ToString());
+                            return new Lexem(JToken.CloseObjectBrace, text[position].ToString(), position);
                         case '[':
-                            return new Lexem(JToken.OpenArrayBrace, text[position].ToString());
+                            return new Lexem(JToken.OpenArrayBrace, text[position].ToString(), position);
                         case ']':
-                            return new Lexem(JToken.CloseArrayBrace, text[position].ToString());
+                            return new Lexem(JToken.CloseArrayBrace, text[position].ToString(), position);
                         case ',':
-                            return new Lexem(JToken.Comma, text[position].ToString());
+                            return new Lexem(JToken.Comma, text[position].ToString(), position );
                         case ':':
-                            return new Lexem(JToken.Colon, text[position].ToString());
+                            return new Lexem(JToken.Colon, text[position].ToString(), position );
                         case '"':
                             stringStart = ++position;
                             quoteFl = true;
                             break;
                         default:
-                             stringStart = position;
-                             break;
+                            stringStart = position;
+                            break;
                     }
                 }
             }

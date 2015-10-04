@@ -6,10 +6,10 @@ namespace JSON
     {
         public JAbstractObject Root { get; set; }      
 
-        public static JDocument Load(string text)
+        public static JDocument Load(string jsonString)
         {
             JDocument JD = new JDocument();
-            Parser parser = new Parser(text);
+            Parser parser = new Parser(jsonString);
             JD.Root = parser.Parse();
             return JD;
         }

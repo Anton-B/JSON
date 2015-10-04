@@ -14,7 +14,6 @@
         Double = 10,
         True = 11,
         False = 12,
-        Null = 13,
-        Char = 14   
+        Null = 13
     }
 }

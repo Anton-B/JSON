@@ -14,50 +14,90 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using JSON;
 
-namespace Formatter
+namespace JSON_Formatter
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool isHighlighted = false;
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void bt_paste_Click(object sender, RoutedEventArgs e)
+        private void btPaste_Click(object sender, RoutedEventArgs e)
         {
             richTextBox.Focus();
             richTextBox.Paste();
         }
 
-        private void bt_copy_Click(object sender, RoutedEventArgs e)
+        private void btCopy_Click(object sender, RoutedEventArgs e)
         {
             richTextBox.Focus();
             richTextBox.Copy();
         }
 
-        private void bt_format_Click(object sender, RoutedEventArgs e)
+        private void btFormat_Click(object sender, RoutedEventArgs e)
         {
             richTextBox.Focus();
             string oldStr = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
             richTextBox.Document.Blocks.Clear();
-            richTextBox.Document = Formatter.Format(oldStr);
+            richTextBox.Document = new FlowDocument(new Paragraph(new Run(Formatter.Format(oldStr))));
+            Highlight();
         }
 
-        private void bt_remove_space_Click(object sender, RoutedEventArgs e)
+        private void btRemoveWhiteSpace_Click(object sender, RoutedEventArgs e)
         {
             richTextBox.Focus();
             string oldStr = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
             richTextBox.Document.Blocks.Clear();
             richTextBox.AppendText(Formatter.RemoveEmptyEntries(oldStr));
+            Highlight();
         }
 
-        private void bt_clear_Click(object sender, RoutedEventArgs e)
+        private void btClear_Click(object sender, RoutedEventArgs e)
         {
             richTextBox.Focus();
             richTextBox.Document.Blocks.Clear();
+        }
+
+        private void btSelectAll_Click(object sender, RoutedEventArgs e)
+        {
+            richTextBox.Focus();
+            richTextBox.Selection.Select(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
+        }
+
+        private void btHighlight_Click(object sender, RoutedEventArgs e)
+        {
+            if (isHighlighted == true)
+            {
+                isHighlighted = false;
+                btHighlight.Content = "Highlight";
+            }
+            else
+            {
+                isHighlighted = true;
+                btHighlight.Content = "Unhighlight";
+            }
+            Highlight();
+        }
+
+        private void Highlight()
+        {
+            richTextBox.Focus();
+            string oldStr = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
+            richTextBox.Document.Blocks.Clear();
+            if (isHighlighted == false)
+                richTextBox.Document = new FlowDocument(new Paragraph(new Run(oldStr)));
+            else 
+                richTextBox.Document = Colorizer.Colorize(oldStr);
+        }
+
+        private void btViewJson_Click(object sender, RoutedEventArgs e)
+        {
+            treeJsonView.Items.Add(Viewer.BuildTree(new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text));
         }
     }
 }
