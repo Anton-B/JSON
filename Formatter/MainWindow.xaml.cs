@@ -97,7 +97,16 @@ namespace JSON_Formatter
 
         private void btViewJson_Click(object sender, RoutedEventArgs e)
         {
-            treeJsonView.Items.Add(Viewer.BuildTree(new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text));
+            treeJsonView.Focus();
+            treeJsonView.Items.Clear();
+            try
+            {
+                treeJsonView.Items.Add(Viewer.BuildTree(new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text));
+            }
+            catch
+            {
+                MessageBox.Show("JSON input is not correct, so tree cannot be built. Please, check the input string.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
